@@ -44,3 +44,17 @@ class VirtualMachine:
         ]
         self.ip = 0
         self.reg = [0] * NUM_REG
+
+    #VM gets the value in memory instruction pointer is pointing at and moves the instruction pointer on by one address
+    def fetch(self):
+        instruction = self.ram[self.ip]
+        self.ip += 1
+
+        #extract the op code and operands from instruction
+        op = instruction & OP_MASK
+        instruction >>= OP_SHIFT
+        arg0 = instruction & OP_MASK
+        instruction >>= OP_SHIFT
+        arg1 = instruction & OP_MASK
+        
+        return [op, arg0, arg1]
